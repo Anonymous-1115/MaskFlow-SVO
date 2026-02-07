@@ -932,7 +932,7 @@ class SLAM:
                 self.T_12_net = self.T_12_net @ T_12
                 self.T_wc = self.cameras[-1].T_wc @ self.T_12
 
-                if not self.args.ba:
+                if self.args.no_ba:
                     continue
 
                 # ---------------------------- Slinding Window Optimization ----------------------------
@@ -1272,16 +1272,19 @@ class SLAM:
                 row_kf = T_wc[:3].flatten().astype(np.float64)  # 1 x 12
                 kf_pose_to_save.append(np.concatenate((timestamp, row_kf), axis=None))
         np.savetxt(est_kf_path_kitti, np.array(kf_pose_to_save))
-        print(f'\033[1;32m [success] \033[0m',
-              '(KITTI) Save estimated keyframe trajectory to {}'.format(est_kf_path_kitti))
+        print(f'\033[1;32m [success] \033[0m', '(KITTI) Save estimated keyframe trajectory to {}'.format(est_kf_path_kitti))
 
+        print(f'\033[1;33m [MaskFlow-SVO-Net] \033[0m')
         t_rel, r_rel, ate, rpe_trans, rpe_rot = self.eval_tool.eval(gt_path_kitti, est_path_kitti, quiet=True)
+
+        print(f'\033[1;33m [MaskFlow-SVO] \033[0m')
         t_rel_kf, r_rel_kf, ate_kf, rpe_trans_kf, rpe_rot_kf = self.eval_tool.eval(gt_path_kitti, est_kf_path_kitti, quiet=True)
 
         output_path = './results/output.txt'
         with open(output_path, 'a') as f:
             f.write('{} {} {:.2f} {:.2f} {:.2f}  ||  '.format(self.dataset_name, self.seq, t_rel, r_rel, ate))
             f.write('{:.2f} {:.2f} {:.2f}\n'.format(t_rel_kf, r_rel_kf, ate_kf))
+        print('Result has been written to {}'.format(output_path))
 
 
 def main(args):
@@ -1295,8 +1298,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset_name', type=str, default='kitti_tracking', choices=['kitti', 'kitti_tracking'])
     parser.add_argument('--model', type=str, default='./configs/model_predict.yaml')
     parser.add_argument('--seq', type=str, default=None)
-    parser.add_argument('--ba', type=bool, default=True)
-    parser.add_argument('--kitti_submit', type=bool, default=False)
+    parser.add_argument('--no_ba', action='store_true', default=False)
     parser.add_argument('--seed', type=int, default=42)
     args = parser.parse_args()
 

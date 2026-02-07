@@ -57,10 +57,14 @@ python -m datasets.generate_cache.cache_kitti_tracking --seq 02
 ```
 
 ### Evaluation
+Run MaskFlow-SVO. You can also manually specify the running sequence in [configs/kitti_tracking.yaml](./configs/kitti_tracking.yaml).
 ```
 python -m main --dataset kitti_tracking --seq 02
 ```
-You can also manually specify the running sequence in [configs/kitti_tracking.yaml](./configs/kitti_tracking.yaml).
+Only run MaskFlow-SVO-Net to trade-off speed and accuracy.
+```
+python -m main --dataset kitti_tracking --seq 02 --no_ba
+```
 
 ## KITTI-Odometry
 ### Dataset
@@ -78,11 +82,14 @@ python -m datasets.generate_cache.cache_kitti --seq 07
 ```
 
 ### Evaluation
+Run MaskFlow-SVO. You can also manually specify the running sequence in [configs/kitti.yaml](./configs/kitti.yaml).
 ```
 python -m main --dataset kitti --seq 07
 ```
-You can also manually specify the running sequence in [configs/kitti.yaml](./configs/kitti.yaml).
-
+Only run MaskFlow-SVO-Net to trade-off speed and accuracy.
+```
+python -m main --dataset kitti --seq 07 --no_ba
+```
 
 ## License
 This software is MIT licensed.
