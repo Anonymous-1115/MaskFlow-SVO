@@ -1,0 +1,7 @@
+network:
+  height: 192
+  width: 640
+  ckpt: './models/weights/maskflow_svo_kitti.ckpt'
+  intrinsic_layer: True
+  normalize: True
+  beta: 30.0

@@ -1,0 +1,28 @@
+name: 'KITTI'
+
+prediction:
+  path: "/media/xiechen/NVME/benchmark/KITTI_Odometry"
+  seq: [ '07' ]
+  # Odom: 07, 09 10
+  num_workers: 0
+  batch_size: 1
+
+backend:
+  window_size: 10
+  N_select: 100
+  num_overlap: 5
+  th_flow: 1.0  # px
+  th_depth: [1.0, 100.0]  # m
+  th_kf: 15.0  # px
+  th_nonzero_mask: 0.3  # below this value will insert a new keyframe
+  th_score: 0.8  # for epipolar check
+  sigma2_scale: 10000.0
+  sigma2_odom_rot: 1000000.0
+  sigma2_odom_trans: 10.0
+  sigma2_odom: 1.0  # DEPRECATED
+  init_sigma: 0.0001 # DEPRECATED
+  sigma2: 1.0  # DEPRECATED
+  robust_kernel: True
+  use_uv_filter: False
+  enable_timing: False
+
