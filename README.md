@@ -15,6 +15,7 @@ Extensive experiments on diverse public datasets and a self-collected dataset sh
 ## Installation
 ```
 git clone https://github.com/Anonymous-1115/MaskFlow-SVO.git
+cd ./MaskFlow-SVO
 conda create -n maskflow python=3.10
 conda activate maskflow
 python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/ 
